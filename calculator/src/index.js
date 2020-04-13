@@ -76,9 +76,30 @@ class Calculator extends React.Component {
     const num1 = parseInt(numbers[0], 10);
     const num2 = parseInt(numbers[1], 10);
     const operator = operatorsArray[0];
+    let answer;
 
-    console.log("Num1: " + num1 + " Num2: " + num2);
-    console.log("Operator: " + operator) 
+    switch(operator) {
+      case '+':
+        answer = num1 + num2;
+        break;
+      case '-':
+        answer = num1 - num2;
+        break;
+      case '*':
+        answer = num1 * num2;
+        break;
+      case '/':
+        answer = num1 / num2;
+        break;
+
+      default:
+        answer = null;
+        break;
+    }
+
+    this.setState({
+      displayText: answer,
+    })
   }
 
   syntaxError() {
