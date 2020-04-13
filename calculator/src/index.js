@@ -6,13 +6,59 @@ class Calculator extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      displayText: "22+454",
+      displayText: "",
+      clearOnNextInput: false,
     };
   }
 
   handleClick(i)
   {
-    alert("Clicked: " + i);
+    switch(i) {
+      case 'C':
+        this.setState({
+          displayText: "",
+        });
+        break;
+      case '=':
+        this.evaluateAnswer()
+        break;
+      case '<-':
+        if(this.state.clearOnNextInput) {
+          this.setState({
+            displayText: "",
+            clearOnNextInput: false,
+          })
+        } else {
+          const displayText = this.state.displayText;
+          const displayTextLen = displayText.length;
+          this.setState({
+            displayText: displayText.slice(0, displayTextLen - 1),
+          });
+        }
+        break;
+      
+      default:
+        if(this.state.clearOnNextInput) {
+          this.setState({
+            displayText: i,
+            clearOnNextInput: false,
+          })
+        } else {
+          this.setState({
+            displayText: this.state.displayText + i,
+          });
+        }
+        break;
+    }
+  }
+
+  evaluateAnswer()
+  {
+    alert("Expression: " + this.state.displayText);
+    this.setState({
+      displayText: "ANSWER",
+      clearOnNextInput: true,
+    });
   }
 
   renderButton(i) {
@@ -40,7 +86,7 @@ class Calculator extends React.Component {
         <div className="container">
           {this.renderButtonSpace()}
           {this.renderButtonSpace()}
-          {this.renderButtonSpace()}
+          {this.renderButton("<-")}
           {this.renderButton("C")}
         </div>
         <div className="container">
