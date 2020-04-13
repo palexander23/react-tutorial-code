@@ -1,5 +1,11 @@
 .calculator {
-  width: 12rem;
+  width: 14rem;
+  max-width: 14rem;
+  display: inline-block;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  border: 2px solid slategrey;
+  border-radius: 4px;
 }
 
 .calcInputButtonDimensions {
