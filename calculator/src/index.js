@@ -73,7 +73,7 @@ class Calculator extends React.Component {
 
   renderButtonSpace() {
     return(
-    <div className="calcInputButton"></div> 
+    <div className="calcInputButtonDimensions calcInputButtonSpaceColor"></div> 
     );
   }
 
@@ -121,7 +121,7 @@ class Calculator extends React.Component {
 class Button extends React.Component {
   render() {
     return(
-    <button className="calcInputButton" onClick={() => this.props.onClick()}>
+    <button className="calcInputButtonDimensions calcInputButtonColorTextProperties" onClick={() => this.props.onClick()}>
       {this.props.text}
     </button>
     );
