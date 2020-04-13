@@ -54,11 +54,38 @@ class Calculator extends React.Component {
 
   evaluateAnswer()
   {
-    alert("Expression: " + this.state.displayText);
+    const expression = this.state.displayText;
+    const expressionFormatRegEx = /[0-9]+\+[0-9]+$/g;
+    const expressionFormatMatchArray = expression.match(expressionFormatRegEx);
+    if((expressionFormatMatchArray == null) || (expressionFormatMatchArray.length !== 1)) {
+      this.syntaxError();
+      return;
+    }
+
+    const operatorsRegEx = /([+\-*/])/g
+    const operatorsArray = expression.match(operatorsRegEx);
+
+    const numbersRegEx = /([0-9])+/g
+    const numbers = expression.match(numbersRegEx);
+
+    if((operatorsArray.length !== 1) || (numbers.length !== 2)) {
+      this.syntaxError();
+      return;
+    }
+
+    const num1 = parseInt(numbers[0], 10);
+    const num2 = parseInt(numbers[1], 10);
+    const operator = operatorsArray[0];
+
+    console.log("Num1: " + num1 + " Num2: " + num2);
+    console.log("Operator: " + operator)
+  }
+
+  syntaxError() {
     this.setState({
-      displayText: "ANSWER",
+      displayText: "SYNTAX ERROR",
       clearOnNextInput: true,
-    });
+    })
   }
 
   renderButton(i) {
@@ -91,25 +118,25 @@ class Calculator extends React.Component {
         </div>
         <div className="container">
           {this.renderButton("+")}
-          {this.renderButton(1)}
-          {this.renderButton(2)}
-          {this.renderButton(3)}
+          {this.renderButton("1")}
+          {this.renderButton("2")}
+          {this.renderButton("3")}
         </div>
         <div className="container">
           {this.renderButton("-")}
-          {this.renderButton(4)}
-          {this.renderButton(5)}
-          {this.renderButton(6)}
+          {this.renderButton("4")}
+          {this.renderButton("5")}
+          {this.renderButton("6")}
         </div>
         <div className="container">
           {this.renderButton("*")}
-          {this.renderButton(7)}
-          {this.renderButton(8)}
-          {this.renderButton(9)}
+          {this.renderButton("7")}
+          {this.renderButton("8")}
+          {this.renderButton("9")}
         </div>
         <div className="container">
           {this.renderButton("/")}
-          {this.renderButton(0)}
+          {this.renderButton("0")}
           {this.renderButtonSpace()}
           {this.renderButton("=")}
         </div>
