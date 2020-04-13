@@ -55,7 +55,7 @@ class Calculator extends React.Component {
   evaluateAnswer()
   {
     const expression = this.state.displayText;
-    const expressionFormatRegEx = /[0-9]+\+[0-9]+$/g;
+    const expressionFormatRegEx = /[0-9]+[+/\-*][0-9]+$/g;
     const expressionFormatMatchArray = expression.match(expressionFormatRegEx);
     if((expressionFormatMatchArray == null) || (expressionFormatMatchArray.length !== 1)) {
       this.syntaxError();
@@ -78,7 +78,7 @@ class Calculator extends React.Component {
     const operator = operatorsArray[0];
 
     console.log("Num1: " + num1 + " Num2: " + num2);
-    console.log("Operator: " + operator)
+    console.log("Operator: " + operator) 
   }
 
   syntaxError() {
