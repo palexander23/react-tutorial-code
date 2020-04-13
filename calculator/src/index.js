@@ -8,6 +8,7 @@ class Calculator extends React.Component {
     this.state = {
       displayText: "",
       clearOnNextInput: false,
+      charactersDisplayed: 0,      
     };
   }
 
@@ -17,6 +18,7 @@ class Calculator extends React.Component {
       case 'C':
         this.setState({
           displayText: "",
+          charactersDisplayed: 0,
         });
         break;
       case '=':
@@ -27,6 +29,7 @@ class Calculator extends React.Component {
           this.setState({
             displayText: "",
             clearOnNextInput: false,
+            charactersDisplayed: this.state.charactersDisplayed - 1,
           })
         } else {
           const displayText = this.state.displayText;
@@ -38,14 +41,19 @@ class Calculator extends React.Component {
         break;
       
       default:
+        if(!this.state.clearOnNextInput && (this.state.charactersDisplayed >= 18)) {
+          break;
+        }
         if(this.state.clearOnNextInput) {
           this.setState({
             displayText: i,
             clearOnNextInput: false,
+            charactersDisplayed: 1,
           })
         } else {
           this.setState({
             displayText: this.state.displayText + i,
+            charactersDisplayed: this.state.charactersDisplayed + 1,
           });
         }
         break;
@@ -55,7 +63,7 @@ class Calculator extends React.Component {
   evaluateAnswer()
   {
     const expression = this.state.displayText;
-    const expressionFormatRegEx = /[0-9]+[+/\-*][0-9]+$/g;
+    const expressionFormatRegEx = /[0-9.]+[+/\-*][0-9.]+$/g;
     const expressionFormatMatchArray = expression.match(expressionFormatRegEx);
     if((expressionFormatMatchArray == null) || (expressionFormatMatchArray.length !== 1)) {
       this.syntaxError();
@@ -65,7 +73,7 @@ class Calculator extends React.Component {
     const operatorsRegEx = /([+\-*/])/g
     const operatorsArray = expression.match(operatorsRegEx);
 
-    const numbersRegEx = /([0-9])+/g
+    const numbersRegEx = /([0-9.])+/g
     const numbers = expression.match(numbersRegEx);
 
     if((operatorsArray.length !== 1) || (numbers.length !== 2)) {
@@ -73,8 +81,8 @@ class Calculator extends React.Component {
       return;
     }
 
-    const num1 = parseInt(numbers[0], 10);
-    const num2 = parseInt(numbers[1], 10);
+    const num1 = parseFloat(numbers[0], 10);
+    const num2 = parseFloat(numbers[1], 10);
     const operator = operatorsArray[0];
     let answer;
 
@@ -134,7 +142,7 @@ class Calculator extends React.Component {
         <div className="container">
           {this.renderButtonSpace()}
           {this.renderButtonSpace()}
-          {this.renderButton("<-")}
+          {this.renderButton("←")}
           {this.renderButton("C")}
         </div>
         <div className="container">
@@ -157,8 +165,8 @@ class Calculator extends React.Component {
         </div>
         <div className="container">
           {this.renderButton("/")}
+          {this.renderButton(".")}
           {this.renderButton("0")}
-          {this.renderButtonSpace()}
           {this.renderButton("=")}
         </div>
     </div>
