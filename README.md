@@ -1,3 +1,4 @@
-# React Tutorial Stuff 
+# React Tutorial Code
 
-Just a set of react projects I want to transfer between pcs without using the filestore
+This repo contains code written when following tutorials on React.js.
+I never took it very far due to Uni commitments but thought I'd leave it here in case I ever picked it up again. 
